@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Image Forensics Analyzer · ForensicAI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- ── Navbar ──────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+      </div>
+      <span class="nav-logo-name">ForensicAI</span>
+      <span class="nav-logo-ver">v2.4</span>
+    </div>
+    <div class="nav-links">
+      <a href="#">Dashboard</a>
+      <a href="#">Analysis</a>
+      <a href="#">Reports</a>
+      <a href="#">Settings</a>
+    </div>
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      SYSTEM ONLINE
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-vignette"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-pill">
+      <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+      </svg>
+      HYBRID FORENSIC ANALYSIS ENGINE · NEURAL + METADATA + ELA + NOISE
+    </div>
+    <h1 class="hero-title">
+      AI Image Forensics &amp;<br>Authenticity Analyzer
+    </h1>
+    <p class="hero-sub">
+      Enterprise-grade image verification platform combining deep neural networks,
+      EXIF forensics, error-level analysis, and noise profiling to detect AI-generated
+      and manipulated images with high confidence.
+    </p>
+    <div class="hero-chips">
+      <div class="hero-chip">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/>
+          <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
+          <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
+          <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/>
+          <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
+        </svg>
+        CNN Deep Learning
+      </div>
+      <div class="hero-chip">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+        </svg>
+        EXIF Forensics
+      </div>
+      <div class="hero-chip">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        Error Level Analysis
+      </div>
+      <div class="hero-chip">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+          <line x1="6"  y1="20" x2="6"  y2="14"/>
+        </svg>
+        Noise Profiling
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Page content ────────────────────────────────────── -->
+<div class="page-wrap">
+
+  <!-- Upload + Preview grid -->
+  <div class="upload-grid">
+
+    <!-- Upload card -->
+    <div class="glass-card">
+      <div class="section-label">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+        </svg>
+        <span>Image Upload</span>
+        <div class="section-label-line"></div>
+      </div>
+
+      <form id="uploadForm" enctype="multipart/form-data">
+        <div id="dropZone" class="drop-zone">
+          <div class="dz-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+            </svg>
+          </div>
+          <p class="dz-title">Drag &amp; Drop Image</p>
+          <p class="dz-sub">or click to browse &middot; PNG, JPG, WEBP supported</p>
+          <input type="file" id="imageInput" accept="image/*" hidden />
+          <button type="button" id="browseBtn">Browse Files</button>
+        </div>
+
+        <div id="fileInfo" class="file-info" style="display:none"></div>
+
+        <!-- Scan progress (hidden until analyzing) -->
+        <div id="scanProgress" class="scan-progress" style="display:none">
+          <div class="scan-progress-header">
+            <span class="label">FORENSIC PIPELINE</span>
+            <span class="pct" id="scanPct">0%</span>
+          </div>
+          <div class="prog-wrap">
+            <div class="prog-fill" id="scanFill" style="width:0%;background:#00d4ff;box-shadow:0 0 8px #00d4ff80"></div>
+          </div>
+          <div class="scan-steps">
+            <div class="scan-step">
+              <div class="scan-step-dot" data-step="cnn"></div>
+              <span class="scan-step-label" data-step="cnn">CNN</span>
+            </div>
+            <div class="scan-step">
+              <div class="scan-step-dot" data-step="exif"></div>
+              <span class="scan-step-label" data-step="exif">EXIF</span>
+            </div>
+            <div class="scan-step">
+              <div class="scan-step-dot" data-step="ela"></div>
+              <span class="scan-step-label" data-step="ela">ELA</span>
+            </div>
+            <div class="scan-step">
+              <div class="scan-step-dot" data-step="noise"></div>
+              <span class="scan-step-label" data-step="noise">NOISE</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" id="analyzeBtn" disabled>
+          <span class="spinner"></span>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <span class="btn-label">Run Forensic Analysis</span>
+        </button>
+
+        <p id="statusText"></p>
+      </form>
+    </div>
+
+    <!-- Preview card -->
+    <div class="glass-card preview-card">
+      <div class="section-label">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+        <span>Image Preview</span>
+        <div class="section-label-line"></div>
+      </div>
+
+      <!-- Scan overlay -->
+      <div id="scanOverlay" class="scan-overlay">
+        <div class="scan-line-el"></div>
+        <div class="scan-overlay-bg"></div>
+      </div>
+
+      <img id="previewImage" alt="Preview" />
+      <div id="previewVerdict" class="preview-verdict"></div>
+
+      <div class="preview-placeholder" id="previewPlaceholder">
+        <svg width="44" height="44" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        <p>No image loaded</p>
+        <small>Upload an image to begin analysis</small>
+      </div>
+
+      <div id="quickStats" class="quick-stats" style="display:none"></div>
+    </div>
+
+  </div><!-- /upload-grid -->
+
+  <!-- ── Authenticity Score ── -->
+  <div id="scoreSection" class="score-section" style="display:none;margin-bottom:20px">
+    <div class="section-label">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+      </svg>
+      <span>Authenticity Assessment</span>
+      <div class="section-label-line"></div>
+    </div>
+
+    <div class="score-inner">
+
+      <!-- Gauge -->
+      <div class="gauge-wrap">
+        <div class="gauge-rings">
+          <div class="gauge-ring" style="width:232px;height:232px"></div>
+          <div class="gauge-ring" style="width:232px;height:232px"></div>
+        </div>
+        <canvas id="gaugeCanvas" width="200" height="200"></canvas>
+        <div class="gauge-text">
+          <div id="gaugeNum" class="gauge-num">0</div>
+          <div class="gauge-denom">/ 100</div>
+        </div>
+      </div>
+
+      <!-- Score breakdown -->
+      <div class="score-right">
+        <div id="verdictBadge" class="verdict-badge verdict-authentic" style="display:none"></div>
+
+        <!-- Score bars -->
+        <div class="score-bar-row">
+          <div class="score-bar-header">
+            <span class="bl">CNN Confidence</span>
+            <span class="bv" id="scoreValCNN" style="color:#00d4ff">—</span>
+          </div>
+          <div class="prog-wrap"><div class="prog-fill" id="scoreBarCNN" style="width:0%;background:#00d4ff"></div></div>
+        </div>
+        <div class="score-bar-row">
+          <div class="score-bar-header">
+            <span class="bl">Metadata Integrity</span>
+            <span class="bv" id="scoreValMeta" style="color:#00d4ff">—</span>
+          </div>
+          <div class="prog-wrap"><div class="prog-fill" id="scoreBarMeta" style="width:0%;background:#00d4ff"></div></div>
+        </div>
+        <div class="score-bar-row">
+          <div class="score-bar-header">
+            <span class="bl">ELA Consistency</span>
+            <span class="bv" id="scoreValELA" style="color:#00d4ff">—</span>
+          </div>
+          <div class="prog-wrap"><div class="prog-fill" id="scoreBarELA" style="width:0%;background:#00d4ff"></div></div>
+        </div>
+        <div class="score-bar-row">
+          <div class="score-bar-header">
+            <span class="bl">Noise Pattern</span>
+            <span class="bv" id="scoreValNoise" style="color:#00d4ff">—</span>
+          </div>
+          <div class="prog-wrap"><div class="prog-fill" id="scoreBarNoise" style="width:0%;background:#00d4ff"></div></div>
+        </div>
+      </div>
+
+      <!-- Confidence sidebar -->
+      <div class="score-confidence">
+        <div class="score-conf-title">Confidence</div>
+        <div id="confRows"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Forensic Modules ── -->
+  <div class="section-label modules-label">
+    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/>
+      <line x1="12" y1="17" x2="12" y2="21"/>
+    </svg>
+    <span>Forensic Analysis Modules</span>
+    <div class="section-label-line"></div>
+  </div>
+
+  <div class="modules-grid">
+
+    <!-- CNN card -->
+    <div class="module-card">
+      <div class="mc-header">
+        <div class="mc-title">
+          <div class="mc-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/>
+              <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
+              <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
+              <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/>
+              <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
+            </svg>
+          </div>
+          <span class="mc-name">CNN Analysis</span>
+        </div>
+        <span id="cnnBadge" class="mc-badge-standby">STANDBY</span>
+      </div>
+      <div id="cnnContent">
+        <div class="mc-placeholder">
+          <div style="width:70%"></div><div style="width:50%"></div>
+          <div style="width:90%"></div><div style="width:60%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metadata card -->
+    <div class="module-card">
+      <div class="mc-header">
+        <div class="mc-title">
+          <div class="mc-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <ellipse cx="12" cy="5" rx="9" ry="3"/>
+              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+            </svg>
+          </div>
+          <span class="mc-name">Metadata Analysis</span>
+        </div>
+        <span id="metaBadge"></span>
+      </div>
+      <div id="metaContent">
+        <div class="mc-placeholder">
+          <div style="width:80%"></div><div style="width:55%"></div>
+          <div style="width:70%"></div><div style="width:65%"></div>
+          <div style="width:85%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ELA card -->
+    <div class="module-card">
+      <div class="mc-header">
+        <div class="mc-title">
+          <div class="mc-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <span class="mc-name">Error Level Analysis</span>
+        </div>
+        <span id="elaBadge"></span>
+      </div>
+      <div id="elaContent">
+        <div class="mc-placeholder">
+          <div style="width:100%;height:120px;border-radius:10px;margin-bottom:12px"></div>
+          <div style="width:60%"></div><div style="width:40%"></div>
+        </div>
+      </div>
+      <div class="ela-wrap" style="display:none" id="elaWrap">
+        <img id="elaImage" alt="ELA Output" />
+      </div>
+    </div>
+
+    <!-- Noise card -->
+    <div class="module-card">
+      <div class="mc-header">
+        <div class="mc-title">
+          <div class="mc-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M1.42 9a16 16 0 0121.16 0M5 12.55a11 11 0 0114.08 0M10.71 17.11a6 6 0 002.58 0M12 20h.01"/>
+            </svg>
+          </div>
+          <span class="mc-name">Noise Pattern Analysis</span>
+        </div>
+        <span id="noiseBadge"></span>
+      </div>
+      <div id="noiseContent">
+        <div class="mc-placeholder">
+          <div style="width:50%;height:44px;margin-bottom:12px"></div>
+          <div style="width:70%"></div><div style="width:55%"></div>
+          <div style="width:80%"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /modules-grid -->
+
+  <!-- ── Forensic Report ── -->
+  <div id="reportContainer" class="report-section" style="display:none">
+    <div class="report-header">
+      <div class="section-label" style="margin-bottom:0;flex:1">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <span>Forensic Investigation Report</span>
+        <div class="section-label-line"></div>
+      </div>
+      <div class="report-btns">
+        <button id="downloadBtn" class="report-btn report-btn-cyan" disabled>
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          Download Report
+        </button>
+        <button id="exportBtn" class="report-btn report-btn-blue" disabled>
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          </svg>
+          Export JSON
+        </button>
+      </div>
+    </div>
+
+    <div class="report-body">
+      <div class="report-topbar">
+        <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0110 0v4"/>
+        </svg>
+        FORENSIC REPORT · CONFIDENTIAL
+        <span class="report-ts" id="reportTs"></span>
+      </div>
+      <pre id="reportBox"></pre>
+    </div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <div class="footer">
+    <div class="footer-logo">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+      </svg>
+      ForensicAI Platform v2.4 · Hybrid Image Verification
+    </div>
+    <span>CNN · ELA · EXIF · Noise</span>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+
+<!-- Enable analyze button once file is selected -->
+<script>
+  document.getElementById("imageInput").addEventListener("change", function() {
+    document.getElementById("analyzeBtn").disabled = !this.files.length;
+  });
+  document.getElementById("dropZone").addEventListener("drop", function() {
+    setTimeout(() => {
+      document.getElementById("analyzeBtn").disabled = false;
+    }, 100);
+  });
+  // Show verdict badge after results
+  const _origPopulate = window.populateResults;
+  document.addEventListener("DOMContentLoaded", function() {
+    const vb = document.getElementById("verdictBadge");
+    if (vb) vb.style.display = "inline-flex";
+  });
+</script>
+
+</body>
+</html>

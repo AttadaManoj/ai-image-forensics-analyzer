@@ -1,3 +1,6 @@
+<img width="1918" height="927" alt="Screenshot 2026-06-23 115953" src="https://github.com/user-attachments/assets/a9adb675-f05f-437a-bf92-5ad3e7cef257" />
+<img width="1915" height="906" alt="Screenshot 2026-06-23 115825" src="https://github.com/user-attachments/assets/d396929d-01ce-4079-9349-8d241b69f37f" />
+<img width="1907" height="912" alt="Screenshot 2026-06-23 115737" src="https://github.com/user-attachments/assets/4eb661d3-f8f5-4efb-a9ab-88a54c866c4e" />
 # AI Image Forensics Analyzer
 
 A hybrid digital image authenticity verification platform that combines deep learning and forensic analysis to determine whether an image is authentic or AI-generated.
